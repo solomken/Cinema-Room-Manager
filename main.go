@@ -89,13 +89,12 @@ func menuNavigation(rows int, seats int, theater [][]bool) {
 				selectedRow, selectedSeat = getReservationDetails()
 				currentPrice := ticketPrice(rows, seats, selectedRow)
 
-				currentIncome += currentPrice
-
 				_, err := makeReservation(rows, seats, selectedRow, selectedSeat, theater)
 				if err != nil {
 					fmt.Println(err)
 					continue
 				}
+				currentIncome += currentPrice
 				fmt.Printf("\nTicket price: $%d\n", currentPrice)
 				break
 			}
@@ -164,13 +163,6 @@ func statistic(theater [][]bool) (int, float64) {
 	return purchasedTickets, purchasedTicketsInPercent
 }
 
-func printStatistics(purchasedTickets int, purchasedTicketsInPercent float64, currentIncome, totalIncome int) {
-	fmt.Println("\nNumber of purchased tickets: ", purchasedTickets)
-	fmt.Printf("Percentage: %.2f%%\n", purchasedTicketsInPercent)
-	fmt.Printf("Current income: $%d\n", currentIncome)
-	fmt.Printf("Total income: $%d\n", totalIncome)
-}
-
 func calculateTotalIncome(rows int, seats int) int {
 	var totalIncome int
 
@@ -182,6 +174,13 @@ func calculateTotalIncome(rows int, seats int) int {
 		totalIncome += ((rows - frontRows) * seats) * priceLow
 	}
 	return totalIncome
+}
+
+func printStatistics(purchasedTickets int, purchasedTicketsInPercent float64, currentIncome, totalIncome int) {
+	fmt.Println("\nNumber of purchased tickets: ", purchasedTickets)
+	fmt.Printf("Percentage: %.2f%%\n", purchasedTicketsInPercent)
+	fmt.Printf("Current income: $%d\n", currentIncome)
+	fmt.Printf("Total income: $%d\n", totalIncome)
 }
 
 func main() {
